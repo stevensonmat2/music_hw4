@@ -2,6 +2,7 @@ from test_module import TestModule
 from effects import Toaster
 import pyaudio
 import time
+from numpy import random
 
 class Synth:
     """
@@ -20,6 +21,8 @@ class Synth:
         self.root = args.root
         self.bps = 60 / args.bpm
         self.beats = args.beats
+        self.attack = args.ramp
+        self.decay = args.ramp
         self.stream = self.p.open(
             format=pyaudio.paFloat32,
             channels=1,
@@ -53,10 +56,20 @@ class Synth:
         else:
             note = self.random_note()
 
-        data = self.volume * self.sound_module.play(note)
+        data = self.volume * self.sound_module.play(note, self.attack)
         if apply_effect:
             data = self.effect.apply_effect(data)
+        
+        # attack_length = int(round(len(data) * self.attack, 0))
+        # print(attack_length)
+        # volume_mod = attack_length / self.volume
+        # mod = 0
+        # for i, sample in enumerate(data[:attack_length]):
+        #     data[i] = sample * mod
+        #     mod += volume_mod
         return data
 
     def random_note(self):
-        return self.root
+        scale_notes = [2, 4, 5, 7, 9, 11, 12]
+        note = self.root + random.choice(scale_notes, 1)[0]
+        return note

@@ -11,7 +11,7 @@ class TestModule:
     def __init__(self) -> None:
         self.phase = 0
 
-    def play(self, note):
+    def play(self, note, attack):
         """
         work in progress
 
