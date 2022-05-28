@@ -8,20 +8,18 @@ class SineModule:
     def play(self, note, duration, attack, is_square=False):
         fs = 48000
         f = 440.0 * (2 ** ((note - 69) / 12))
-
         sine_wave = np.sin((2 * np.pi * np.arange(fs * duration) * f / fs))
+        length = len(sine_wave)
+        ramp = length * attack
 
         if is_square:
             sine_wave = np.sign(sine_wave)
 
-        length = len(sine_wave)
-        ramp = length * attack
-
         # got help from class mates on this loop
         for i in range(length):
             if i <= ramp:
-                sine_wave[i] *= i / ramp
-            else:
+                sine_wave[i] *= (i / ramp)
+            elif i >= length - ramp:
                 sine_wave[i] *= (length - i) / ramp
 
         return sine_wave.astype(np.float32)

@@ -4,10 +4,10 @@ from synth import Synth
 parser = argparse.ArgumentParser()
 parser.add_argument("--root", type=int, default=48)
 parser.add_argument("--beats", type=int, default=8)
-parser.add_argument("--bpm", type=int, default=90.0)
-parser.add_argument("--ramp", type=int, default=0.5)
-parser.add_argument("--accent", type=int, default=5)
-parser.add_argument("--volume", type=int, default=8)
+parser.add_argument("--bpm", type=float, default=90.0)
+parser.add_argument("--ramp", type=float, default=0.5)
+parser.add_argument("--accent", type=float, default=5)
+parser.add_argument("--volume", type=float, default=8)
 args = parser.parse_args()
 
 
